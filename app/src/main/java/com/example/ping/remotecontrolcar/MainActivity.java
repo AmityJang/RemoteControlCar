@@ -10,14 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
-import android.net.nsd.NsdManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -25,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -107,9 +102,8 @@ public class MainActivity extends AppCompatActivity {
                             ask.setMessage("是否要與beaglebone-0配對?");
                             ask.setPositiveButton("是", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int i) {
-                                    Method creMethod = null;
                                     try {
-                                        creMethod = BluetoothDevice.class.getMethod("createBond");
+                                        Method creMethod = BluetoothDevice.class.getMethod("createBond");
                                         creMethod.invoke(device);
                                         image.setBackgroundResource(R.drawable.btpair);
                                         direction.setText("Connect to beaglebone!");
