@@ -1,8 +1,11 @@
 package com.example.ping.remotecontrolcar;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -67,5 +70,50 @@ public class ControlActivity extends AppCompatActivity {
             else
                 Toast.makeText(ControlActivity.this,"Sorry, the connection was close!",Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        destroy();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            ConfirmExit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    public void ConfirmExit(){
+        AlertDialog.Builder ad=new AlertDialog.Builder(ControlActivity.this);
+        ad.setMessage("確定要離開此程式嗎?");
+        ad.setPositiveButton("是", new DialogInterface.OnClickListener() {//exit  button
+            public void onClick(DialogInterface dialog, int i) {
+                destroy();
+                //MainActivity.this.finish();//finish activity
+            }
+        });
+        ad.setNegativeButton("否",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int i) {
+                //do nothing
+            }
+        });
+        ad.show();
+    }
+    public void destroy()
+    {
+        /*if(btAdapter!=null && btAdapter.isEnabled())
+            btAdapter.disable();
+        try {
+            if (socket!=null && socket.isConnected()){
+                //output.close();
+                socket.close();
+            }
+            unregisterReceiver(btReceiver);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());*/
     }
 }
